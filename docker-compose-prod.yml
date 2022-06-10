@@ -4,28 +4,29 @@ services:
   app:
     build:
       context: .
-      args:
-        - DEV=true
+      dockerfile: Dockerfile.prod
+    restart: always
     volumes:
-      - ./app:/app
-      - dev-static-data:/vol/web # setup volume for static
+      - prod-static-data:/vol/web
     environment:
       - DB_HOST=db
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
+      - DB_PORT=${DB_PORT}
       - SECRET_KEY=${DJANGO_SECRET_KEY}
       - ALLOWED_HOST=${DJANGO_ALLOWED_HOSTS}
     depends_on:
       - db
 
   db:
-    image: postgres:13-alpine
+    image: postgres:14.3-alpine
+    restart: always
     volumes:
-      - dev-db-data:/var/lib/postgresql/data
+      - prod-postgres-data:/var/lib/postgres/data
     environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=dbname
+      - POSTGRES_USER=rootuser
       - POSTGRES_PASSWORD=${DB_PASS}
 
   proxy:
@@ -37,8 +38,8 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - dev-static-data:/vol/static
+      - prod-static-data:/vol/static
 
 volumes:
-  dev-static-data:
-  dev-db-data:
+  prod-static-data:
+  prod-postgres-data:

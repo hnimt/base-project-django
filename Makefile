@@ -1,26 +1,23 @@
 test:
-	docker-compose -f docker-compose-dev.yml run --rm app sh -c "python manage.py wait_for_db && python manage.py test && flake8"
+	docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test && flake8"
 
 build:
-	docker-compose -f docker-compose-dev.yml build
+	docker-compose build
 
 up:
-	docker-compose -f docker-compose-dev.yml up
+	docker-compose up
 
 down:
-	docker-compose -f docker-compose-dev.yml down
+	docker-compose down
 
 makemigrations:
-	docker-compose -f docker-compose-dev.yml run --rm app sh -c "python manage.py makemigrations"
+	docker-compose run --rm app sh -c "python manage.py makemigrations"
 
 migrate:
-	docker-compose -f docker-compose-dev.yml run --rm app sh -c "python manage.py wait_for_db && python manage.py migrate"
+	docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py migrate"
 
 superuser:
-	docker-compose -f docker-compose-dev.yml run --rm app sh -c "python manage.py createsuperuser"
+	docker-compose run --rm app sh -c "python manage.py createsuperuser"
 
 start:
-	docker-compose -f docker-compose-dev.yml run --rm app sh -c "python manage.py runserver"
-
-logs:
-	docker-compose -f docker-compose-dev.yml logs
+	docker-compose run --rm app sh -c "python manage.py runserver"

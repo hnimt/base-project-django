@@ -26,6 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
 ALLOWED_HOSTS = []
+# Recommend with prod
 ALLOWED_HOSTS.extend(
     filter(
         None,
@@ -89,6 +90,7 @@ DATABASES = {
         'HOST': os.environ.get('DB_HOST'),
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
+        'PORT': os.environ.get('DB_PORT'),
         'PASSWORD': os.environ.get('DB_PASS'),
     }
 }
